@@ -1,0 +1,49 @@
+# ==========================
+# Datasets & Raw Data
+# ==========================
+data/
+dataset/
+datasets/
+raw_data/
+inputs/
+outputs/
+results/
+logs/
+tmp/
+cache/
+*.csv
+*.tsv
+*.jsonl
+*.json
+*.xlsx
+*.zip
+*.tar
+*.tar.gz
+*.tar.bz2
+*.npz
+*.npy
+*.pkl
+
+# ==========================
+# Models & Checkpoints
+# ==========================
+models/
+checkpoints/
+weights/
+saved_models/
+*.pt
+*.pth
+*.bin
+*.h5
+*.ckpt
+*.onnx
+*.tflite
+*.model
+
+# ==========================
+# Generated Artifacts
+# ==========================
+runs/
+experiments/
+outputs/
+*.log
