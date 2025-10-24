@@ -10,7 +10,7 @@ from utils import delete_test_from_filecontext, get_import_context, rust_parser,
 
 from code_eval.tasks.base import TaskBase
 from transformers import AutoTokenizer
-from constant import *
+from retrievers.prompt_template import *
 
 lang_parsers = {
     "rust": rust_parser,

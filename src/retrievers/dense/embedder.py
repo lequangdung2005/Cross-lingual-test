@@ -7,10 +7,12 @@ import numpy as np
 from typing import List
 import logging
 
+from src.core.base import BaseEmbedder
+
 logger = logging.getLogger(__name__)
 
 
-class UniXcoderEmbedder:
+class UniXcoderEmbedder(BaseEmbedder):
     """
     Wrapper for UniXcoder model to generate code embeddings.
     
@@ -26,7 +28,7 @@ class UniXcoderEmbedder:
             model_name: HuggingFace model identifier
             device: Device to run the model on ('cuda', 'cpu', or None for auto)
         """
-        self.model_name = model_name
+        self._model_name = model_name
         self.device = device or ('cuda' if torch.cuda.is_available() else 'cpu')
         self.model = None
         self.tokenizer = None
@@ -36,10 +38,10 @@ class UniXcoderEmbedder:
         """Load the UniXcoder model and tokenizer."""
         try:
             from transformers import AutoTokenizer, AutoModel
-            logger.info(f"Loading UniXcoder model: {self.model_name}")
+            logger.info(f"Loading UniXcoder model: {self._model_name}")
             
-            self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-            self.model = AutoModel.from_pretrained(self.model_name)
+            self.tokenizer = AutoTokenizer.from_pretrained(self._model_name)
+            self.model = AutoModel.from_pretrained(self._model_name)
             self.model.to(self.device)
             self.model.eval()
             
@@ -117,3 +119,21 @@ class UniXcoderEmbedder:
                 raise
         
         return np.vstack(embeddings) if embeddings else np.array([])
+    
+    @property
+    def embedding_dim(self) -> int:
+        """Get the embedding dimension."""
+        if self.model is None:
+            self._load_model()
+        # UniXcoder base model has 768 dimensions
+        return self.model.config.hidden_size
+    
+    @property
+    def model_name(self) -> str:
+        """Get the model name."""
+        return self._model_name
+    
+    @model_name.setter
+    def model_name(self, value: str):
+        """Set the model name."""
+        self._model_name = value

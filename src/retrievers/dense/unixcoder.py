@@ -25,7 +25,7 @@ The code has been refactored into separate modules for better maintainability:
 from .models import CodeExample, RetrievalResult
 from .embedder import UniXcoderEmbedder
 from .database import CodeExampleDatabase
-from .pipeline import FewShotTestGenerationPipeline
+from ..fewshot_pipeline import FewShotTestGenerationPipeline
 from .utils import create_pipeline
 
 import logging

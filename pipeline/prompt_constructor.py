@@ -41,7 +41,7 @@ def construct_benchmark_prompt(
         Benchmark results dict if successful, None otherwise
     """
     try:
-        from retriever import create_pipeline
+        from dense import create_pipeline
         
         logger.info("=" * 80)
         logger.info("CONSTRUCTING BENCHMARK PROMPTS")
@@ -206,7 +206,7 @@ def construct_single_prompt(
         Pipeline result dict if successful, None otherwise
     """
     try:
-        from retriever import create_pipeline
+        from dense import create_pipeline
         
         # Load query code
         if query_file:

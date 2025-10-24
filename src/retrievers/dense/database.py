@@ -6,23 +6,22 @@ import numpy as np
 from typing import List, Optional, Dict, Tuple
 import logging
 
-from .models import CodeExample, RetrievalResult
-from .embedder import UniXcoderEmbedder
+from src.core.base import CodeExample, RetrievalResult, BaseDatabase, BaseEmbedder
 
 logger = logging.getLogger(__name__)
 
 
-class CodeExampleDatabase:
+class CodeExampleDatabase(BaseDatabase):
     """
     Database of code examples with their embeddings for retrieval.
     """
     
-    def __init__(self, embedder: UniXcoderEmbedder):
+    def __init__(self, embedder: BaseEmbedder):
         """
         Initialize the database.
         
         Args:
-            embedder: UniXcoder embedder instance
+            embedder: Embedder instance (e.g., UniXcoderEmbedder)
         """
         self.embedder = embedder
         self.examples: List[CodeExample] = []
@@ -52,8 +51,13 @@ class CodeExampleDatabase:
         Args:
             examples: List of (focal_method, unit_test, metadata) tuples
         """
-        for focal, test, meta in examples:
-            self.add_example(focal, test, meta)
+        for item in examples:
+             if hasattr(item, "focal_method") :
+                focal = getattr(item, "focal_method", None)
+                test  = getattr(item, "unit_test", None)
+                meta  = getattr(item, "metadata", None)
+                self.add_example(focal, test, meta)
+
     
     def build_index(self, batch_size: int = 8):
         """
@@ -175,3 +179,13 @@ class CodeExampleDatabase:
         self.embeddings = save_data['embeddings']
         
         logger.info(f"Database loaded from {path} with {len(self.examples)} examples")
+    
+    @property
+    def size(self) -> int:
+        """Get the number of examples in the database."""
+        return len(self.examples)
+    
+    @property
+    def retrieval_method(self) -> str:
+        """Get the retrieval method name."""
+        return "dense_vector_similarity"

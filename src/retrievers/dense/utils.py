@@ -6,7 +6,7 @@ from typing import Tuple
 
 from .embedder import UniXcoderEmbedder
 from .database import CodeExampleDatabase
-from .pipeline import FewShotTestGenerationPipeline
+from ..fewshot_pipeline import FewShotTestGenerationPipeline
 
 
 def create_pipeline(

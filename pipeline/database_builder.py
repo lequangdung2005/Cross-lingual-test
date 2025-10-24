@@ -39,8 +39,8 @@ def build_database(
         True if successful, False otherwise
     """
     try:
-        from retriever import create_pipeline
-        from database_data_loader import DataLoader
+        from dense import create_pipeline
+        from retrievers.database_data_loader import DataLoader
         
         logger.info("=" * 80)
         logger.info("BUILDING DATABASE")
