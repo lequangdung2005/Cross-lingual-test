@@ -1,7 +1,7 @@
 """
 Code example database with embedding-based retrieval.
 """
-
+import tqdm
 import numpy as np
 from typing import List, Optional, Dict, Tuple
 import logging
@@ -52,7 +52,7 @@ class CodeExampleDatabase(BaseDatabase):
             examples: List of (focal_method, unit_test, metadata) tuples
         """
         for item in examples:
-             if hasattr(item, "focal_method") :
+            if hasattr(item, "focal_method"):
                 focal = getattr(item, "focal_method", None)
                 test  = getattr(item, "unit_test", None)
                 meta  = getattr(item, "metadata", None)

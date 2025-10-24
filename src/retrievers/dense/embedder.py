@@ -6,7 +6,7 @@ import torch
 import numpy as np
 from typing import List
 import logging
-
+import tqdm
 from src.core.base import BaseEmbedder
 
 logger = logging.getLogger(__name__)
@@ -95,8 +95,8 @@ class UniXcoderEmbedder(BaseEmbedder):
             Array of embeddings (n_samples, embedding_dim)
         """
         embeddings = []
-        
-        for i in range(0, len(codes), batch_size):
+
+        for i in tqdm.tqdm(range(0, len(codes), batch_size)):
             batch = codes[i:i + batch_size]
             
             try:

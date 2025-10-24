@@ -36,7 +36,13 @@ class RetrievalResult:
     similarity_score: float
     rank: int
     retrieval_method: str = "unknown"  # e.g., "dense", "bm25", "graph", "hybrid"
-
+    def to_dict(self):
+        return {
+            "example": self.example.to_dict() if hasattr(self.example, "to_dict") else self.example,
+            "similarity_score": float(self.similarity_score),
+            "rank": int(self.rank),
+            "retrieval_method": self.retrieval_method
+        }
 
 class BaseEmbedder(ABC):
     """

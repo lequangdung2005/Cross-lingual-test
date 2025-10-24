@@ -243,28 +243,3 @@ class RetrieverFactory:
             'pipelines': list(cls._pipeline_registry.keys())
         }
 
-
-# Auto-register built-in implementations
-def _register_builtin_implementations():
-    """Register built-in retriever implementations."""
-    try:
-        from retrievers.dense.embedder import UniXcoderEmbedder
-        RetrieverFactory.register_embedder("unixcoder", UniXcoderEmbedder)
-    except ImportError:
-        logger.warning("Could not register UniXcoderEmbedder")
-    
-    try:
-        from retrievers.dense.database import CodeExampleDatabase
-        RetrieverFactory.register_database("dense_vector", CodeExampleDatabase)
-    except ImportError:
-        logger.warning("Could not register CodeExampleDatabase")
-    
-    try:
-        from retrievers.fewshot_pipeline import FewShotTestGenerationPipeline
-        RetrieverFactory.register_pipeline("few_shot", FewShotTestGenerationPipeline)
-    except ImportError:
-        logger.warning("Could not register FewShotTestGenerationPipeline")
-
-
-# Register on module import
-_register_builtin_implementations()

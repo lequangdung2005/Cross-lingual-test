@@ -11,6 +11,7 @@ results/
 logs/
 tmp/
 cache/
+.cache/
 *.csv
 *.tsv
 *.jsonl

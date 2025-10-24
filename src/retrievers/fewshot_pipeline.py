@@ -109,34 +109,21 @@ class FewShotTestGenerationPipeline(BasePipeline):
         
         if not results:
             logger.warning("No results to validate")
-            return {
-                'valid_results': [],
-                'filtered_count': 0,
-                'avg_similarity': 0.0,
-                'passed': False,
-                'message': 'No examples retrieved'
-            }
+            return []
         
         # Filter by similarity threshold
         valid_results = [r for r in results if r.similarity_score >= self.similarity_threshold]
         
-        avg_similarity = np.mean([r.similarity_score for r in results])
-        valid_avg = np.mean([r.similarity_score for r in valid_results]) if valid_results else 0.0
+        # avg_similarity = np.mean([r.similarity_score for r in results])
+        # valid_avg = np.mean([r.similarity_score for r in valid_results]) if valid_results else 0.0
         
-        report = {
-            'valid_results': valid_results,
-            'total_retrieved': len(results),
-            'filtered_count': len(results) - len(valid_results),
-            'avg_similarity': float(avg_similarity),
-            'valid_avg_similarity': float(valid_avg),
-            'passed': len(valid_results) > 0,
-            'similarity_threshold': self.similarity_threshold
-        }
+        report = valid_results
         
         logger.info(f"Validation complete: {len(valid_results)}/{len(results)} examples passed")
-        logger.info(f"Average similarity: {avg_similarity:.4f}")
-        
-        if not report['passed']:
+        # logger.info(f"Average similarity: {avg_similarity:.4f}")
+        # logger.info(f"Valid average similarity: {valid_avg:.4f}")
+
+        if not report:
             logger.warning("No examples met the similarity threshold")
         
         return report
@@ -164,25 +151,25 @@ class FewShotTestGenerationPipeline(BasePipeline):
         
         pipeline_result = {
             'focal_method': focal_method,
-            'pipeline_stages': {}
         }
         
         try:
 
             # Stage 1: Retrieve Examples
             retrieval_results = self.retrieve_examples(focal_method, top_k)
-            pipeline_result['pipeline_stages']['retrieval'] = {
-                'results': retrieval_results,
-                'count': len(retrieval_results)
-            }
-            pipeline_result['retrieval_results'] = retrieval_results
+            # pipeline_result['pipeline_stages']['retrieval'] = {
+            #     'results': retrieval_results,
+            #     'count': len(retrieval_results)
+            # }
+            # pipeline_result['retrieval_results'] = retrieval_results
             
             # Stage 2: Validate Retrieval (optional)
             if return_validation:
                 validation_report = self.validate_retrieval(retrieval_results)
-                pipeline_result['pipeline_stages']['validation'] = validation_report
-                pipeline_result['validation'] = validation_report
-            
+                # pipeline_result['pipeline_stages']['validation'] = validation_report
+                pipeline_result['results'] = validation_report
+            else:
+                pipeline_result['results'] = retrieval_results
             pipeline_result['status'] = 'success'
             
             logger.info("=" * 80)
