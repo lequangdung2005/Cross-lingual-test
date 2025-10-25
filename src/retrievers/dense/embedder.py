@@ -82,7 +82,7 @@ class UniXcoderEmbedder(BaseEmbedder):
             logger.error(f"Embedding generation failed: {e}")
             raise
     
-    def embed_batch(self, codes: List[str], max_length: int = 512, batch_size: int = 8) -> np.ndarray:
+    def embed_batch(self, codes: List[str], max_length: int = 1024, batch_size: int = 8) -> np.ndarray:
         """
         Generate embeddings for multiple code snippets.
         
