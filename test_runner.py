@@ -202,7 +202,7 @@ def build_or_load_database(pipeline, database_save_path: str, training_data_path
     pipeline.database.add_examples_bulk(training_examples)
     
     print("Building index (this may take a few minutes)...")
-    pipeline.database.build_index(batch_size=64)
+    pipeline.database.build_index(batch_size=32)
     
     print(f"✓ Database built with {pipeline.database.size} examples")
     
