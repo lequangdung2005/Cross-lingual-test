@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 # Configuration defaults
-TRAINING_DATA_PATH = "/kaggle/input/method2test2/reformat_test.jsonl"
+TRAINING_DATA_PATH = "src/data/database/high-resource/method2test/reformat_test.jsonl"
 BENCHMARK_REPO = "Tessera2025/Tessera2025"
 OUTPUT_DIR = "src/data/constructed_prompt"
 
