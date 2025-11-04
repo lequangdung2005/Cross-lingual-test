@@ -12,18 +12,18 @@ from src.core.base import BaseEmbedder
 logger = logging.getLogger(__name__)
 
 
-class UniXcoderEmbedder(BaseEmbedder):
+class DensecoderEmbedder(BaseEmbedder):
     """
-    Wrapper for UniXcoder model to generate code embeddings.
-    
-    UniXcoder is a unified cross-modal pre-trained model that supports 
+    Wrapper for Densecoder model to generate code embeddings.
+
+    Densecoder is a unified cross-modal pre-trained model that supports
     both code and text understanding.
     """
     
     def __init__(self, model_name: str = "microsoft/unixcoder-base", device: str = None):
         """
-        Initialize UniXcoder embedder.
-        
+        Initialize Densecoder embedder.
+
         Args:
             model_name: HuggingFace model identifier
             device: Device to run the model on ('cuda', 'cpu', or None for auto)
@@ -35,10 +35,10 @@ class UniXcoderEmbedder(BaseEmbedder):
         self._load_model()
         
     def _load_model(self):
-        """Load the UniXcoder model and tokenizer."""
+        """Load the Densecoder model and tokenizer."""
         try:
             from transformers import AutoTokenizer, AutoModel
-            logger.info(f"Loading UniXcoder model: {self._model_name}")
+            logger.info(f"Loading Densecoder model: {self._model_name}")
             
             self.tokenizer = AutoTokenizer.from_pretrained(self._model_name)
             self.model = AutoModel.from_pretrained(self._model_name)

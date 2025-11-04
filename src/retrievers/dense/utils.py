@@ -4,7 +4,7 @@ Utility functions for easy pipeline setup.
 
 from typing import Tuple
 
-from .embedder import UniXcoderEmbedder
+from .embedder import DensecoderEmbedder
 from .database import CodeExampleDatabase
 from ..fewshot_pipeline import FewShotTestGenerationPipeline
 
@@ -19,7 +19,7 @@ def create_pipeline(
     Create a complete pipeline with embedder and database.
     
     Args:
-        model_name: UniXcoder model name
+        model_name: Densecoder model name
         device: Device to run on
         top_k: Number of examples to retrieve
         similarity_threshold: Minimum similarity threshold
@@ -27,7 +27,7 @@ def create_pipeline(
     Returns:
         Tuple of (pipeline, database)
     """
-    embedder = UniXcoderEmbedder(model_name=model_name, device=device)
+    embedder = DensecoderEmbedder(model_name=model_name, device=device)
     database = CodeExampleDatabase(embedder)
     pipeline = FewShotTestGenerationPipeline(
         embedder=embedder,
