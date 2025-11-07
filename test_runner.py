@@ -284,6 +284,12 @@ def main():
         default=0.0,
         help='Minimum similarity threshold for retrieval (default: 0.0)'
     )
+    parser.add_argument(
+        '--rerank-pool-size',
+        type=int,
+        default=50,
+        help='Number of candidates to retrieve before reranking (default: 50)'
+    )
     
     args = parser.parse_args()
     
@@ -297,6 +303,7 @@ def main():
     print(f"Embedder: {EMBEDDER_NAME}")
     print(f"Database: {DATABASE_SAVE_PATH}")
     print(f"Top-K: {args.top_k}")
+    print(f"Rerank Pool Size: {args.rerank_pool_size}")
     print(f"Similarity Threshold: {args.similarity_threshold}")
     print("=" * 80)
     print()
@@ -324,7 +331,8 @@ def main():
             pipeline_type="few_shot",
             pipeline_kwargs={
                 "top_k": args.top_k,
-                "similarity_threshold": args.similarity_threshold
+                "similarity_threshold": args.similarity_threshold,
+                "rerank_pool_size": args.rerank_pool_size
             }
         )
         print("✓ Pipeline created successfully")
